@@ -1,4 +1,4 @@
-# gl [![Build Status](https://travis-ci.org/goxjs/gl.svg?branch=master)](https://travis-ci.org/goxjs/gl) [![GoDoc](https://godoc.org/github.com/goxjs/gl?status.svg)](https://godoc.org/github.com/goxjs/gl)
+# gl
 
 Package gl is a Go cross-platform binding for OpenGL, with an OpenGL ES 2-like API.
 
@@ -10,23 +10,25 @@ It supports:
 
 - **Modern Browsers** (desktop and mobile) via WebGL 1.0 backend.
 
-This is a fork of golang.org/x/mobile/gl package with [CL 8793](https://go-review.googlesource.com/8793)
-merged in and Windows support added. This package is fully functional, but may eventually become superceded by
-the new x/mobile/gl plan. It will exist and be fully supported until it can be safely replaced by a better package.
+It was forked of https://github.com/goxjs/gl with [#28](https://github.com/goxjs/gl/issues/28) resolved
+to add concurrency support similar to http://golang.org/x/mobile/gl, from where the project originally stems. 
+
+The main differences to http://golang.org/x/mobile/gl are the added support for web ([CL 8793](https://go-review.googlesource.com/8793)),
+as well as the focus on being a lightweight library with good desktop support instead of a comprehensive framework for mobile development.
 
 Installation
 ------------
 
 ```bash
-go get -u github.com/goxjs/gl/...
-GOARCH=js go get -u -d github.com/goxjs/gl/...
+go get -u github.com/maja42/gl/...
+GOARCH=js go get -u -d github.com/maja42/gl/...
 ```
 
 Usage
 -----
 
-This OpenGL binding has a ContextWatcher, which implements [glfw.ContextWatcher](https://godoc.org/github.com/goxjs/glfw#ContextWatcher)
-interface. Recommended usage is with github.com/goxjs/glfw package, which accepts a ContextWatcher in its Init, and takes on the responsibility
+This OpenGL binding has a ContextWatcher, which implements [glfw.ContextWatcher](https://godoc.org/github.com/maja/glfw#ContextWatcher)
+interface. Recommended usage is with github.com/maja/glfw package, which accepts a ContextWatcher in its Init, and takes on the responsibility
 of notifying it when context is made current or detached.
 
 ```Go
@@ -45,4 +47,17 @@ gl.ContextWatcher.OnMakeCurrent(nil)
 
 glfw.DetachCurrentContext()
 gl.ContextWatcher.OnDetach()
+```
+
+Note that if you are using a different windowing library than http://github.com/maja/glfw, all calls must happen within the same render thread.
+
+```Go
+renderThread := render.New()
+defer renderThread.Terminate()
+
+gl.Init(renderThread)
+renderThread.Enqueue(true, func() {
+    glfw.Init(gl.ContextWatcher)
+    window, _ = glfw.CreateWindow(...)
+})
 ```

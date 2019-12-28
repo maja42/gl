@@ -13,18 +13,6 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
-var ContextWatcher contextWatcher
-
-type contextWatcher struct{}
-
-func (contextWatcher) OnMakeCurrent(context interface{}) {
-	// context must be a WebGLRenderingContext *js.Object.
-	c = context.(*js.Object)
-}
-func (contextWatcher) OnDetach() {
-	c = nil
-}
-
 // c is the current WebGL context, or nil if there is no current context.
 var c *js.Object
 

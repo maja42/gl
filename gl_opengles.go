@@ -21,12 +21,7 @@ import "C"
 
 import "unsafe"
 
-var ContextWatcher contextWatcher
-
-type contextWatcher struct{}
-
-func (contextWatcher) OnMakeCurrent(context interface{}) {}
-func (contextWatcher) OnDetach()                         {}
+//TODO(maja): Enqueue calls to render-thread, the same way it's done in gl_opengl
 
 func ActiveTexture(texture Enum) {
 	C.glActiveTexture(texture.c())
