@@ -1,4 +1,4 @@
 /.idea
 
 /gl.go
-/example
+/example/motionBlur.go
