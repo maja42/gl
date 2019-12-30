@@ -128,6 +128,24 @@ func BufferData(target Enum, src []byte, usage Enum) {
 	})
 }
 
+// BufferDataFloat32 creates a new data store for the bound buffer object.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
+func BufferDataFloat32(target Enum, src []float32, usage Enum) {
+	ctx.enqueue(false, func() {
+		gl.BufferData(uint32(target), int(len(src) * 4), gl.Ptr(&src[0]), uint32(usage))
+	})
+}
+
+// BufferDataUint16 creates a new data store for the bound buffer object.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
+func BufferDataUint16(target Enum, src []uint16, usage Enum) {
+	ctx.enqueue(false, func() {
+		gl.BufferData(uint32(target), int(len(src) * 2), gl.Ptr(&src[0]), uint32(usage))
+	})
+}
+
 // BufferInit creates a new unitialized data store for the bound buffer object.
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
@@ -143,6 +161,24 @@ func BufferInit(target Enum, size int, usage Enum) {
 func BufferSubData(target Enum, offset int, data []byte) {
 	ctx.enqueue(false, func() {
 		gl.BufferSubData(uint32(target), offset, int(len(data)), gl.Ptr(&data[0]))
+	})
+}
+
+// BufferSubDataFloat32 sets some of data in the bound buffer object.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
+func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
+	ctx.enqueue(false, func() {
+		gl.BufferSubData(uint32(target), byteOffset, int(len(data) * 4), gl.Ptr(&data[0]))
+	})
+}
+
+// BufferSubDataUint16 sets some of data in the bound buffer object.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
+func BufferSubDataUint16(target Enum, byteOffset int, data []uint16) {
+	ctx.enqueue(false, func() {
+		gl.BufferSubData(uint32(target), byteOffset, int(len(data) * 2), gl.Ptr(&data[0]))
 	})
 }
 

@@ -77,12 +77,28 @@ func BufferData(target Enum, src []byte, usage Enum) {
 	C.glBufferData(target.c(), C.GLsizeiptr(len(src)), unsafe.Pointer(&src[0]), usage.c())
 }
 
+func BufferDataFloat32(target Enum, src []float32, usage Enum) {
+	C.glBufferData(target.c(), C.GLsizeiptr(len(src)*4), unsafe.Pointer(&src[0]), usage.c())
+}
+
+func BufferDataUint16(target Enum, src []uint16, usage Enum) {
+	C.glBufferData(target.c(), C.GLsizeiptr(len(src)*2), unsafe.Pointer(&src[0]), usage.c())
+}
+
 func BufferInit(target Enum, size int, usage Enum) {
 	C.glBufferData(target.c(), C.GLsizeiptr(size), nil, usage.c())
 }
 
 func BufferSubData(target Enum, offset int, data []byte) {
 	C.glBufferSubData(target.c(), C.GLintptr(offset), C.GLsizeiptr(len(data)), unsafe.Pointer(&data[0]))
+}
+
+func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
+	C.glBufferSubData(target.c(), C.GLintptr(byteOffset), C.GLsizeiptr(len(data)*4), unsafe.Pointer(&data[0]))
+}
+
+func BufferSubDataUint16(target Enum, byteOffset int, data []uint16) {
+	C.glBufferSubData(target.c(), C.GLintptr(byteOffset), C.GLsizeiptr(len(data)*2), unsafe.Pointer(&data[0]))
 }
 
 func CheckFramebufferStatus(target Enum) Enum {
