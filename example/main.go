@@ -45,10 +45,8 @@ void main(void) {
 }
 `
 
-var renderThread *render.RenderThread
-
 func main() {
-	renderThread = render.New()
+	renderThread := render.New()
 	defer renderThread.Terminate()
 
 	if err := glfw.Init(renderThread, gl.ContextWatcher); err != nil {
