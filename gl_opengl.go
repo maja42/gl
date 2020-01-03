@@ -133,7 +133,7 @@ func BufferData(target Enum, src []byte, usage Enum) {
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
 func BufferDataFloat32(target Enum, src []float32, usage Enum) {
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src) * 4), gl.Ptr(&src[0]), uint32(usage))
+		gl.BufferData(uint32(target), int(len(src)*4), gl.Ptr(&src[0]), uint32(usage))
 	})
 }
 
@@ -142,7 +142,7 @@ func BufferDataFloat32(target Enum, src []float32, usage Enum) {
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
 func BufferDataUint16(target Enum, src []uint16, usage Enum) {
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src) * 2), gl.Ptr(&src[0]), uint32(usage))
+		gl.BufferData(uint32(target), int(len(src)*2), gl.Ptr(&src[0]), uint32(usage))
 	})
 }
 
@@ -169,7 +169,7 @@ func BufferSubData(target Enum, offset int, data []byte) {
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
 func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), byteOffset, int(len(data) * 4), gl.Ptr(&data[0]))
+		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*4), gl.Ptr(&data[0]))
 	})
 }
 
@@ -178,7 +178,7 @@ func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
 func BufferSubDataUint16(target Enum, byteOffset int, data []uint16) {
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), byteOffset, int(len(data) * 2), gl.Ptr(&data[0]))
+		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*2), gl.Ptr(&data[0]))
 	})
 }
 
@@ -1548,3 +1548,19 @@ func Viewport(x, y, width, height int) {
 		gl.Viewport(int32(x), int32(y), int32(width), int32(height))
 	})
 }
+
+// Select a polygon rasterization mode.
+// NOTE: This method is exposed for debugging purposes only. It is not available in OpenGL ES or WebGL.
+//
+// https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPolygonMode.xhtml
+func PolygonMode(mode Enum) {
+	ctx.enqueue(false, func() {
+		gl.PolygonMode(gl.FRONT_AND_BACK, uint32(mode))
+	})
+}
+
+const (
+	POINT = gl.POINT
+	LINE  = gl.LINE
+	FILL  = gl.FILL
+)
