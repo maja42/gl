@@ -123,8 +123,12 @@ func BlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha Enum) 
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
 func BufferData(target Enum, src []byte, usage Enum) {
+	p := unsafe.Pointer(nil)
+	if len(src) > 0 {
+		p = gl.Ptr(&src[0])
+	}
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src)), gl.Ptr(&src[0]), uint32(usage))
+		gl.BufferData(uint32(target), int(len(src)), p, uint32(usage))
 	})
 }
 
@@ -132,8 +136,13 @@ func BufferData(target Enum, src []byte, usage Enum) {
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
 func BufferDataFloat32(target Enum, src []float32, usage Enum) {
+	//BufferData(target, 	f32.Bytes(binary.LittleEndian, src...), usage)
+	p := unsafe.Pointer(nil)
+	if len(src) > 0 {
+		p = gl.Ptr(&src[0])
+	}
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src)*4), gl.Ptr(&src[0]), uint32(usage))
+		gl.BufferData(uint32(target), int(len(src)*4), p, uint32(usage))
 	})
 }
 
@@ -141,8 +150,12 @@ func BufferDataFloat32(target Enum, src []float32, usage Enum) {
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
 func BufferDataUint16(target Enum, src []uint16, usage Enum) {
+	p := unsafe.Pointer(nil)
+	if len(src) > 0 {
+		p = gl.Ptr(&src[0])
+	}
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src)*2), gl.Ptr(&src[0]), uint32(usage))
+		gl.BufferData(uint32(target), int(len(src)*2), p, uint32(usage))
 	})
 }
 
@@ -159,8 +172,12 @@ func BufferInit(target Enum, size int, usage Enum) {
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
 func BufferSubData(target Enum, offset int, data []byte) {
+	p := unsafe.Pointer(nil)
+	if len(data) > 0 {
+		p = gl.Ptr(&data[0])
+	}
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), offset, int(len(data)), gl.Ptr(&data[0]))
+		gl.BufferSubData(uint32(target), offset, int(len(data)), p)
 	})
 }
 
@@ -168,8 +185,12 @@ func BufferSubData(target Enum, offset int, data []byte) {
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
 func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
+	p := unsafe.Pointer(nil)
+	if len(data) > 0 {
+		p = gl.Ptr(&data[0])
+	}
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*4), gl.Ptr(&data[0]))
+		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*4), p)
 	})
 }
 
@@ -177,8 +198,12 @@ func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferSubData.xhtml
 func BufferSubDataUint16(target Enum, byteOffset int, data []uint16) {
+	p := unsafe.Pointer(nil)
+	if len(data) > 0 {
+		p = gl.Ptr(&data[0])
+	}
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*2), gl.Ptr(&data[0]))
+		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*2), p)
 	})
 }
 

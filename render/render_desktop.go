@@ -51,6 +51,7 @@ func (r *RenderThread) Terminate() {
 // If blocking is true, the function call will wait until the render thread executed it.
 // If false, the call is async.
 func (r *RenderThread) Enqueue(blocking bool, fn func()) {
+	//blocking = true
 	var done chan struct{}
 	if blocking {
 		done = make(chan struct{})
