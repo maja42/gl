@@ -2,7 +2,9 @@
 
 package render
 
-import "runtime"
+import (
+	"runtime"
+)
 
 const callBufSize = 20
 
