@@ -400,12 +400,38 @@ func DeleteBuffer(v Buffer) {
 	})
 }
 
+// DeleteBuffers deletes the given buffer objects.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glDeleteBuffers.xhtml
+func DeleteBuffers(v ...Buffer) {
+	bufs := make([]uint32, len(v))
+	for i, b := range v {
+		bufs[i] = b.Value
+	}
+	ctx.enqueue(false, func() {
+		gl.DeleteBuffers(int32(len(bufs)), &bufs[0])
+	})
+}
+
 // DeleteFramebuffer deletes the given framebuffer object.
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glDeleteFramebuffers.xhtml
 func DeleteFramebuffer(v Framebuffer) {
 	ctx.enqueue(false, func() {
 		gl.DeleteFramebuffers(1, &v.Value)
+	})
+}
+
+// DeleteFramebuffers deletes the given framebuffer objects.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glDeleteFramebuffers.xhtml
+func DeleteFramebuffers(v ...Framebuffer) {
+	bufs := make([]uint32, len(v))
+	for i, b := range v {
+		bufs[i] = b.Value
+	}
+	ctx.enqueue(false, func() {
+		gl.DeleteFramebuffers(int32(len(bufs)), &bufs[0])
 	})
 }
 
@@ -427,6 +453,19 @@ func DeleteRenderbuffer(v Renderbuffer) {
 	})
 }
 
+// DeleteRenderbuffers deletes the given render buffer objects.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glDeleteRenderbuffers.xhtml
+func DeleteRenderbuffers(v ...Renderbuffer) {
+	bufs := make([]uint32, len(v))
+	for i, b := range v {
+		bufs[i] = b.Value
+	}
+	ctx.enqueue(false, func() {
+		gl.DeleteRenderbuffers(int32(len(bufs)), &bufs[0])
+	})
+}
+
 // DeleteShader deletes shader s.
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glDeleteShader.xhtml
@@ -442,6 +481,19 @@ func DeleteShader(s Shader) {
 func DeleteTexture(v Texture) {
 	ctx.enqueue(false, func() {
 		gl.DeleteTextures(1, &v.Value)
+	})
+}
+
+// DeleteTextures deletes the given texture objects.
+//
+// http://www.khronos.org/opengles/sdk/docs/man3/html/glDeleteTextures.xhtml
+func DeleteTextures(v ...Texture) {
+	bufs := make([]uint32, len(v))
+	for i, b := range v {
+		bufs[i] = b.Value
+	}
+	ctx.enqueue(false, func() {
+		gl.DeleteTextures(int32(len(bufs)), &bufs[0])
 	})
 }
 
