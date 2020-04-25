@@ -128,7 +128,7 @@ func BufferData(target Enum, src []byte, usage Enum) {
 		p = gl.Ptr(&src[0])
 	}
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src)), p, uint32(usage))
+		gl.BufferData(uint32(target), len(src), p, uint32(usage))
 	})
 }
 
@@ -136,13 +136,12 @@ func BufferData(target Enum, src []byte, usage Enum) {
 //
 // http://www.khronos.org/opengles/sdk/docs/man3/html/glBufferData.xhtml
 func BufferDataFloat32(target Enum, src []float32, usage Enum) {
-	//BufferData(target, 	f32.Bytes(binary.LittleEndian, src...), usage)
 	p := unsafe.Pointer(nil)
 	if len(src) > 0 {
 		p = gl.Ptr(&src[0])
 	}
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src)*4), p, uint32(usage))
+		gl.BufferData(uint32(target), len(src)*4, p, uint32(usage))
 	})
 }
 
@@ -155,7 +154,7 @@ func BufferDataUint16(target Enum, src []uint16, usage Enum) {
 		p = gl.Ptr(&src[0])
 	}
 	ctx.enqueue(false, func() {
-		gl.BufferData(uint32(target), int(len(src)*2), p, uint32(usage))
+		gl.BufferData(uint32(target), len(src)*2, p, uint32(usage))
 	})
 }
 
@@ -177,7 +176,7 @@ func BufferSubData(target Enum, offset int, data []byte) {
 		p = gl.Ptr(&data[0])
 	}
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), offset, int(len(data)), p)
+		gl.BufferSubData(uint32(target), offset, len(data), p)
 	})
 }
 
@@ -190,7 +189,7 @@ func BufferSubDataFloat32(target Enum, byteOffset int, data []float32) {
 		p = gl.Ptr(&data[0])
 	}
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*4), p)
+		gl.BufferSubData(uint32(target), byteOffset, len(data)*4, p)
 	})
 }
 
@@ -203,7 +202,7 @@ func BufferSubDataUint16(target Enum, byteOffset int, data []uint16) {
 		p = gl.Ptr(&data[0])
 	}
 	ctx.enqueue(false, func() {
-		gl.BufferSubData(uint32(target), byteOffset, int(len(data)*2), p)
+		gl.BufferSubData(uint32(target), byteOffset, len(data)*2, p)
 	})
 }
 
